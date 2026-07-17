@@ -1,0 +1,354 @@
+/* ==========================================================================
+   TOKENS — paleta, tipografia e medidas base
+   ========================================================================== */
+:root {
+  --cream: #FBF1E7;
+  --white: #FFFDF9;
+  --pink: #F3D6D9;
+  --wine: #7A2E3B;
+  --wine-dark: #5E2530;
+  --gold: #C8A15C;
+  --text: #5B4038;
+  --text-soft: #8B6F63;
+
+  --font-display: 'Parisienne', cursive;
+  --font-body: 'Karla', sans-serif;
+
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --shadow-soft: 0 8px 24px rgba(122, 46, 59, 0.10);
+
+  --transition-slow: 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ==========================================================================
+   RESET básico
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--cream);
+  color: var(--text);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Foco visível para acessibilidade de teclado */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--wine);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   FUNDO AMBIENTE — estrelas, corações translúcidos, brilho
+   ========================================================================== */
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ambient-bg .glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(70vw, 700px);
+  height: min(70vw, 700px);
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(243, 214, 217, 0.55) 0%, rgba(251, 241, 231, 0) 70%);
+  filter: blur(10px);
+  animation: breathe 9s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+  50%      { opacity: 1;   transform: translate(-50%, -50%) scale(1.05); }
+}
+
+/* Estrelinhas discretas (geradas via JS) */
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.25;
+  animation: twinkle ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.08; }
+  50%      { opacity: 0.4; }
+}
+
+/* Corações muito transparentes que sobem devagar (gerados via JS) */
+.drift-heart {
+  position: absolute;
+  bottom: -10%;
+  color: var(--wine);
+  opacity: 0;
+  font-size: 1.4rem;
+  animation: drift-up linear infinite;
+}
+
+@keyframes drift-up {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  10%  { opacity: 0.12; }
+  90%  { opacity: 0.08; }
+  100% { transform: translateY(-115vh) translateX(var(--drift-x, 20px)); opacity: 0; }
+}
+
+/* ==========================================================================
+   LAYOUT PRINCIPAL
+   ========================================================================== */
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6vh 1.5rem 4rem;
+  text-align: center;
+}
+
+.hero-text {
+  margin-bottom: 0.5rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 8vw, 4.2rem);
+  color: var(--wine);
+  line-height: 1;
+}
+
+/* ==========================================================================
+   PALCO DO CORAÇÃO
+   ========================================================================== */
+.heart-stage {
+  position: relative;
+  width: min(90vw, 560px);
+  aspect-ratio: 1 / 1;
+  margin: 1rem auto 0.5rem;
+}
+
+#heartCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+}
+
+.hint {
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  font-style: italic;
+  opacity: 0.75;
+  transition: opacity var(--transition-slow);
+}
+
+.hint.is-hidden {
+  opacity: 0;
+}
+
+/* ==========================================================================
+   CARTÃO DA FRASE ROMÂNTICA
+   ========================================================================== */
+.phrase-card {
+  position: relative;
+  z-index: 2;
+  max-width: 420px;
+  margin: 1.25rem auto 0;
+  padding: 0;
+  min-height: 1.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 4vw, 1.7rem);
+  color: var(--wine-dark);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 600ms ease, transform 600ms ease;
+}
+
+.phrase-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   RODAPÉ
+   ========================================================================== */
+.page-footer {
+  margin-top: 3rem;
+}
+
+.signature {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  margin: 0;
+}
+
+.signature-names {
+  color: var(--wine);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+}
+
+/* ==========================================================================
+   DOODLES DECORATIVOS (rabiscos à mão)
+   ========================================================================== */
+.doodle {
+  position: absolute;
+  width: 90px;
+  height: auto;
+  opacity: 0.35;
+  z-index: 1;
+}
+
+.doodle--top-left {
+  top: 6%;
+  left: 4%;
+}
+
+.doodle--bottom-right {
+  bottom: 6%;
+  right: 4%;
+  transform: rotate(180deg);
+}
+
+@media (max-width: 640px) {
+  .doodle { width: 60px; opacity: 0.25; }
+}
+
+/* ==========================================================================
+   BOTÃO DE MÚSICA
+   ========================================================================== */
+.music-widget {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 5;
+}
+
+/* Esconde o player do YouTube "fora da tela" em vez de display:none —
+   isso evita que alguns navegadores pausem o áudio automaticamente. */
+.yt-audio-holder {
+  position: fixed;
+  top: -9999px;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.music-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(200, 161, 92, 0.5);
+  background: var(--white);
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 300ms ease, box-shadow 300ms ease;
+}
+
+.music-btn:hover {
+  transform: scale(1.06);
+}
+
+.music-btn.is-playing {
+  animation: pulse-soft 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse-soft {
+  0%, 100% { box-shadow: var(--shadow-soft); }
+  50%      { box-shadow: 0 8px 24px rgba(122, 46, 59, 0.22); }
+}
+
+.music-btn .icon {
+  width: 18px;
+  height: 18px;
+  fill: var(--wine);
+}
+
+.music-btn .icon-pause { display: none; }
+.music-btn.is-playing .icon-play { display: none; }
+.music-btn.is-playing .icon-pause { display: block; }
+
+/* ==========================================================================
+   CORAÇÕES FLUTUANTES DE CLIQUE
+   ========================================================================== */
+.floating-hearts {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  overflow: hidden;
+}
+
+.click-heart {
+  position: absolute;
+  color: var(--wine);
+  font-size: 1.1rem;
+  will-change: transform, opacity;
+  animation: float-up 1.8s ease-out forwards;
+}
+
+@keyframes float-up {
+  0%   { transform: translate(0, 0) scale(0.6); opacity: 0.9; }
+  100% { transform: translate(var(--tx, 0), -140px) scale(1.1); opacity: 0; }
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 480px) {
+  .page { padding: 5vh 1rem 3rem; }
+  .heart-stage { width: min(92vw, 380px); }
+}
+
+/* ==========================================================================
+   ACESSIBILIDADE — respeita preferência por menos movimento
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .ambient-bg .glow,
+  .star,
+  .drift-heart,
+  .music-btn.is-playing {
+    animation: none !important;
+  }
+  .click-heart {
+    animation-duration: 0.01ms !important;
+  }
+}

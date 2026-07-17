@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para você ♡</title>
+  <meta name="description" content="Um pequeno cantinho feito com carinho, só para você.">
+  <meta name="theme-color" content="#7A2E3B">
+
+  <!-- Google Fonts: manuscrita para títulos + sans-serif simples para o corpo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Fundo ambiente: estrelas discretas, corações flutuantes translúcidos e brilho suave -->
+  <div class="ambient-bg" id="ambientBg" aria-hidden="true">
+    <div class="glow"></div>
+  </div>
+
+  <main class="page">
+
+    <!-- Pequenos rabiscos decorativos, como se tivessem sido desenhados à mão -->
+    <svg class="doodle doodle--top-left" viewBox="0 0 120 60" aria-hidden="true">
+      <path d="M5,40 C20,10 35,55 50,25 C60,5 75,45 90,20" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linecap="round"/>
+    </svg>
+    <svg class="doodle doodle--bottom-right" viewBox="0 0 120 60" aria-hidden="true">
+      <path d="M10,20 C25,45 40,5 55,30 C68,50 82,10 100,35" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linecap="round"/>
+    </svg>
+
+    <header class="hero-text">
+      <p class="eyebrow">um cantinho pequeno, feito com as mãos</p>
+      <h1 class="title">para você</h1>
+    </header>
+
+    <!-- O coração de palavras: elemento central e assinatura do site -->
+    <section class="heart-stage" aria-label="Animação de um coração formado por centenas de 'eu te amo' girando lentamente">
+      <canvas id="heartCanvas" role="img"></canvas>
+      <p class="hint" id="heartHint">toque no coração</p>
+    </section>
+
+    <!-- Frase romântica que aparece ao clicar no coração -->
+    <div class="phrase-card" id="phraseCard" aria-live="polite"></div>
+
+    <footer class="page-footer">
+      <p class="signature">
+        feito com carinho, um pedacinho de código de cada vez —
+        <span class="signature-names">Matheus &amp; Daniella</span>
+      </p>
+    </footer>
+  </main>
+
+  <!-- Botão discreto de música -->
+  <div class="music-widget">
+    <!--
+      Player do YouTube escondido: ele só existe para tocar o áudio.
+      O ID do vídeo é controlado no script.js, na constante VIDEO_ID —
+      é ali que você troca a música se quiser usar outra.
+    -->
+    <div class="yt-audio-holder" aria-hidden="true">
+      <div id="ytAudioPlayer"></div>
+    </div>
+    <button id="musicToggle" class="music-btn" type="button" aria-pressed="false" aria-label="Tocar música">
+      <svg class="icon icon-play" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+      <svg class="icon icon-pause" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 5h4v14H6zM14 5h4v14h-4z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Container onde os pequenos corações sobem ao clicar -->
+  <div class="floating-hearts" id="floatingHearts" aria-hidden="true"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
